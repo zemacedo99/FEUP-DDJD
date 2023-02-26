@@ -44,9 +44,7 @@ public class PlayerController : MonoBehaviour
                 
                 animator.SetBool("isMoving", success);
             } 
-            else {
-                animator.SetBool("isMoving", false);
-            }
+         
 
             // Set direction of sprite to movement direction
             if(movementInput.x < 0) {
@@ -55,6 +53,9 @@ public class PlayerController : MonoBehaviour
                 spriteRenderer.flipX = false;
             }
 
+        }
+        else {
+            animator.SetBool("isMoving", false);
         }
 
     }
