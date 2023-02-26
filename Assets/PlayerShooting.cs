@@ -17,18 +17,53 @@ public class PlayerShooting : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.Space) && Time.time - lastShotTime > firingRate)
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+        if (enemies.Length == 0)
         {
-            Shoot();
+            // Debug.Log("No enemies found.");
+            return;
+        }
+        
+        if (Time.time - lastShotTime > firingRate)
+        {
+            Shoot(enemies);
         }
     }
 
-    
-    Vector2 GetDirectionClosestEnemy()
+    void Shoot(GameObject[] enemies)
     {
-        GameObject enemy = GameObject.FindWithTag("Enemy");
+        
+        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
+        Physics2D.IgnoreCollision(bullet.GetComponent<Collider2D>(), GetComponent<Collider2D>());
+        Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
+        
+        rb.velocity = GetDirectionClosestEnemy(enemies) * bulletForce;
+        lastShotTime = Time.time;
+    }
+    
+    Vector2 GetDirectionClosestEnemy(GameObject[] enemies)
+    {        
+        GameObject closestEnemy = null;
+        float closestDistance = Mathf.Infinity;
 
-        Vector2 closestEnemyPosition = enemy.transform.position;
+        foreach (GameObject enemy in enemies)
+        {
+            float distance = Vector2.Distance(transform.position, enemy.transform.position);
+            if (distance < closestDistance)
+            {
+                closestEnemy = enemy;
+                closestDistance = distance;
+            }
+        }
+
+        Vector2 closestEnemyPosition = Vector2.zero;
+        if (closestEnemy != null)
+        {
+            closestEnemyPosition = closestEnemy.transform.position;
+            Debug.Log("Closest enemy position: " + closestEnemyPosition);
+
+        }
 
         Vector2 shootDirection = ( (Vector2)closestEnemyPosition- (Vector2)transform.position).normalized;
 
@@ -36,14 +71,5 @@ public class PlayerShooting : MonoBehaviour
     }
 
 
-    void Shoot()
-    {
-        
-        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
-        Physics2D.IgnoreCollision(bullet.GetComponent<Collider2D>(), GetComponent<Collider2D>());
-        Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-        
-        rb.velocity = GetDirectionClosestEnemy() * bulletForce;
-        lastShotTime = Time.time;
-    }
+
 }
