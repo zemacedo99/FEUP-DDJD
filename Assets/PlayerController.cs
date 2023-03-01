@@ -16,6 +16,8 @@ public class PlayerController : MonoBehaviour
     Animator animator;
     SpriteRenderer spriteRenderer;
     public PlayerHeath healthBar;
+    public GameObject pulsePrefab;
+    public Transform firePoint;
 
     private float speedBoostMultiplier = 1f;
     private float speedBoostDurationRemaining = 0f;
@@ -126,5 +128,10 @@ public class PlayerController : MonoBehaviour
     public void HealAmount(float healAmount)
     {
         healthBar.healthAmount += healAmount;
+    }
+
+    public void addWeapon()
+    {
+        GameObject pulse = Instantiate(pulsePrefab, firePoint.position, Quaternion.identity);
     }
 }

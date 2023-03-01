@@ -181,7 +181,9 @@ MonoBehaviour:
     maxDepth: 0
     minNormalAngle: 0
     maxNormalAngle: 0
-  healthBar: {fileID: 0}
+  healthBar: {fileID: 6907440103569501711}
+  pulsePrefab: {fileID: 832554041080370018, guid: 08c351087d9db354d866546a18e318df, type: 3}
+  firePoint: {fileID: 9173691631704459941}
 --- !u!50 &4529632712605021800
 Rigidbody2D:
   serializedVersion: 4
@@ -347,3 +349,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5150976131665250075, guid: cfbcada53fdbffd41bc984e10034db2b, type: 3}
   m_PrefabInstance: {fileID: 530729857000677204}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6907440103569501711 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6377571869829378395, guid: cfbcada53fdbffd41bc984e10034db2b, type: 3}
+  m_PrefabInstance: {fileID: 530729857000677204}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 596316a2732518c40abc6bc9dd993d2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
