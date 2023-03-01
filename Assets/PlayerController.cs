@@ -9,12 +9,13 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed = 1f;
     public float collisionOffset = 0.02f;
     public ContactFilter2D movementFilter;
-
+    
     Vector2 movementInput;
     Rigidbody2D rb;
     List<RaycastHit2D> castCollisions = new List<RaycastHit2D>();
     Animator animator;
     SpriteRenderer spriteRenderer;
+    public PlayerHeath healthBar;
 
     // Start is called before the first frame update
     void Start()
@@ -22,7 +23,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-
+        healthBar = GetComponentInChildren<PlayerHeath>();
     }
 
     private void FixedUpdate() {
@@ -58,6 +59,12 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("isMoving", false);
         }
 
+        // Player death TODO
+		if (healthBar.healthAmount <= 0)
+        {
+			Destroy(gameObject);
+        }
+
     }
 
     private bool TryMove(Vector2 direction) {
@@ -84,5 +91,14 @@ public class PlayerController : MonoBehaviour
 
     void OnMove(InputValue movementValue) {
         movementInput = movementValue.Get<Vector2>();
+    }
+
+    void OnTriggerEnter2D(Collider2D other) //TODO send the function to enemy script
+    {
+        Debug.Log(other.tag);
+        if (other.CompareTag("Enemy"))
+        {
+            healthBar.healthAmount -= 0.025f; // TODO change to enemy damage
+        }
     }
 }
