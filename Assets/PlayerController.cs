@@ -17,6 +17,9 @@ public class PlayerController : MonoBehaviour
     SpriteRenderer spriteRenderer;
     public PlayerHeath healthBar;
 
+    private float speedBoostMultiplier = 1f;
+    private float speedBoostDurationRemaining = 0f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,12 +29,23 @@ public class PlayerController : MonoBehaviour
         healthBar = GetComponentInChildren<PlayerHeath>();
     }
 
-    private void FixedUpdate() {
-      
+    private void FixedUpdate() 
+    {
+        if (speedBoostDurationRemaining > 0f)
+        {
+            // Apply speed boost
+            speedBoostDurationRemaining -= Time.deltaTime;
+        }
+        else
+        {
+            // Reset speed boost
+            speedBoostMultiplier = 1f;
+        }
+
         // If movement input is not 0, try to move
         if(movementInput != Vector2.zero){
 
-             if(movementInput != Vector2.zero){
+            if(movementInput != Vector2.zero){
                 
                 bool success = TryMove(movementInput);
 
@@ -77,7 +91,7 @@ public class PlayerController : MonoBehaviour
                 moveSpeed * Time.fixedDeltaTime + collisionOffset); // The amount to cast equal to the movement plus an offset
 
             if(count == 0){
-                rb.MovePosition(rb.position + direction * moveSpeed * Time.fixedDeltaTime);
+                rb.MovePosition(rb.position + direction * moveSpeed * Time.fixedDeltaTime * speedBoostMultiplier);
                 return true;
             } else {
                 return false;
@@ -100,5 +114,17 @@ public class PlayerController : MonoBehaviour
         {
             healthBar.healthAmount -= 0.025f; // TODO change to enemy damage
         }
+    }
+
+    public void ApplySpeedBoost(float duration)
+    {
+        // Increase movement speed for the specified duration
+        speedBoostMultiplier = 1.5f;
+        speedBoostDurationRemaining = duration;
+    }
+
+    public void HealAmount(float healAmount)
+    {
+        healthBar.healthAmount += healAmount;
     }
 }

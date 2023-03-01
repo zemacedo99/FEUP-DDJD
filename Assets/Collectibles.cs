@@ -5,13 +5,13 @@ using UnityEngine;
 public class Collectibles : MonoBehaviour
 {
     Collider2D collectibleCollider;
-    public PlayerHeath healthBar;
+    PlayerController player;
 
     // Start is called before the first frame update
     void Start()
     {
         collectibleCollider = GetComponent<Collider2D>();
-        healthBar = FindObjectOfType<PlayerHeath>();
+        player = FindObjectOfType<PlayerController>();
     }
 
     // Update is called once per frame
@@ -32,10 +32,11 @@ public class Collectibles : MonoBehaviour
             switch (collectibleCollider.tag)
             {
                 case "Heal":
-                    healthBar.healthAmount += 0.5f;
+                    // player.healthBar.healthAmount += 0.5f;
+                    player.HealAmount(0.5f);
                     break;
                 case "MovSpeed":
-                    //give Player movement speet for a limit time
+                    player.ApplySpeedBoost(5);
                     break;
                 default:
                     // handle any other tag
