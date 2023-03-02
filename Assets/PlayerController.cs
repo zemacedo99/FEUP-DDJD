@@ -15,7 +15,6 @@ public class PlayerController : MonoBehaviour
     List<RaycastHit2D> castCollisions = new List<RaycastHit2D>();
     Animator animator;
     SpriteRenderer spriteRenderer;
-    public PlayerHeath healthBar;
     public GameObject pulsePrefab;
     public Transform firePoint;
 
@@ -28,7 +27,6 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        healthBar = GetComponentInChildren<PlayerHeath>();
     }
 
     private void FixedUpdate() 
@@ -75,11 +73,6 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("isMoving", false);
         }
 
-        // Player death TODO
-		if (healthBar.healthAmount <= 0)
-        {
-			Destroy(gameObject);
-        }
 
     }
 
@@ -109,14 +102,7 @@ public class PlayerController : MonoBehaviour
         movementInput = movementValue.Get<Vector2>();
     }
 
-    void OnTriggerEnter2D(Collider2D other) //TODO send the function to enemy script
-    {
-        Debug.Log(other.tag);
-        if (other.CompareTag("Enemy"))
-        {
-            healthBar.healthAmount -= 0.025f; // TODO change to enemy damage
-        }
-    }
+ 
 
     public void ApplySpeedBoost(float duration)
     {
@@ -127,7 +113,7 @@ public class PlayerController : MonoBehaviour
 
     public void HealAmount(float healAmount)
     {
-        healthBar.healthAmount += healAmount;
+        
     }
 
     public void addWeapon()

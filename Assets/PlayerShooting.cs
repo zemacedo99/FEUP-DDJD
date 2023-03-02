@@ -9,13 +9,14 @@ public class PlayerShooting : MonoBehaviour
     public GameObject bulletPrefab;
     public float firingRate = 5.0f;
 
-
-    public float bulletForce = 1f;
+    [SerializeField] private float bulletForce = 20.0f;
 
     void Start()
     {
+        
         // Call the PeriodicalShooting function every firingRate seconds, starting after an initial delay of 0 seconds
         InvokeRepeating("PeriodicalShooting", 0f, firingRate);
+        bulletForce = 20.0f;
     }
 
     void PeriodicalShooting()
@@ -35,13 +36,16 @@ public class PlayerShooting : MonoBehaviour
 
     }
 
-    void Shoot(Vector2 shootDirection)
+    public void Shoot(Vector2 shootDirection)
     {
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
         Physics2D.IgnoreCollision(bullet.GetComponent<Collider2D>(), GetComponent<Collider2D>());
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
         
+        Debug.Log("Shoot direction: " + bulletForce);
+        Debug.Log("velocity " + rb.velocity);
         rb.velocity = shootDirection * bulletForce;
+        Debug.Log("velocity 2" + rb.velocity);
     }
     
     Vector2 GetClosestEnemyPosition(GameObject[] enemies)

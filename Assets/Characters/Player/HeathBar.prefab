@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5150976131665250075}
   - component: {fileID: 8583845067653748584}
-  - component: {fileID: 6377571869829378395}
   m_Layer: 0
   m_Name: HeathBar
   m_TagString: Untagged
@@ -85,16 +84,3 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &6377571869829378395
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4963098948082479052}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 596316a2732518c40abc6bc9dd993d2a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthAmount: 0.255

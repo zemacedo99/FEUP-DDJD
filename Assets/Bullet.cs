@@ -11,9 +11,13 @@ public class Bullet : MonoBehaviour
         // Debug.Log("Trigger entered!");
         if (other.CompareTag("Enemy"))
         {
-            // Debug.Log("Enemy destroyed!");
-            Destroy(other.gameObject);
-            Destroy(gameObject);
+            Debug.Log("Enemy destroyed!");
+
+            if(other.gameObject.tag == "Enemy") {
+                other.GetComponent<Health>().TakeDamage(50);
+                Destroy(gameObject);
+            }
+           
         }
     }
 

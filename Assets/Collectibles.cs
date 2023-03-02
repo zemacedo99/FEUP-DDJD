@@ -6,24 +6,20 @@ public class Collectibles : MonoBehaviour
 {
     Collider2D collectibleCollider;
     PlayerController player;
+    GameObject playerGO;
 
     // Start is called before the first frame update
     void Start()
     {
         collectibleCollider = GetComponent<Collider2D>();
         player = FindObjectOfType<PlayerController>();
+        playerGO = GameObject.FindGameObjectWithTag("Player");
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        
         
         if (collision.CompareTag("Player"))
         {
@@ -32,8 +28,8 @@ public class Collectibles : MonoBehaviour
             switch (collectibleCollider.tag)
             {
                 case "Heal":
-                    // player.healthBar.healthAmount += 0.5f;
-                    player.HealAmount(0.5f);
+                    playerGO.GetComponent<Health>().quickHeal(50);
+                    Debug.Log("Healed");
                     break;
                 case "MovSpeed":
                     player.ApplySpeedBoost(5);
