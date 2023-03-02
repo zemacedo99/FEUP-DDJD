@@ -27,7 +27,7 @@ public class PlayerShooting : MonoBehaviour
             // Find the closest enemy
             Vector2 closestEnemyPosition = GetClosestEnemyPosition(enemies);
             // Calculate the direction of the bullet
-            Vector2 shootDirection = ((Vector2)closestEnemyPosition - (Vector2)transform.position).normalized;
+            Vector2 shootDirection = ((Vector2)closestEnemyPosition - (Vector2)firePoint.position).normalized;
 
             // Fire a bullet in the direction of the closest enemy
             Shoot(shootDirection);
@@ -51,7 +51,7 @@ public class PlayerShooting : MonoBehaviour
 
         foreach (GameObject enemy in enemies)
         {
-            float distance = Vector2.Distance(transform.position, enemy.transform.position);
+            float distance = Vector2.Distance(firePoint.position, enemy.transform.position);
             if (distance < closestDistance)
             {
                 closestEnemy = enemy;
