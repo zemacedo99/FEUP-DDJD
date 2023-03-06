@@ -10,6 +10,7 @@ public class Health : MonoBehaviour
 	private int MAX_HEALTH = 200;
 
 	private GameObject healthBar;
+	public GameObject gearPrefab;
 
 
 
@@ -72,8 +73,15 @@ public class Health : MonoBehaviour
 
 	private void Die() {
 		Debug.Log("I died");
+		if(gameObject.CompareTag("Enemy"))
+		{
+			DropGear();
+		}
 		Destroy(gameObject);
 	}
 
+	private void DropGear(){
+		GameObject gear = Instantiate(gearPrefab, gameObject.transform.position, Quaternion.identity);
+	}
 
 }

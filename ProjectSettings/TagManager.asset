@@ -9,6 +9,7 @@ TagManager:
   - MovSpeed
   - PulseWeapon
   - HealthBar
+  - Gear
   layers:
   - Default
   - TransparentFX

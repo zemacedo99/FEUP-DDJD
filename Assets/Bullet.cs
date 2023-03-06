@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Bullet : MonoBehaviour
 {
 
+    [SerializeField] private int damage = 50;
 
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -14,7 +16,7 @@ public class Bullet : MonoBehaviour
             Debug.Log("Enemy destroyed!");
 
             if(other.gameObject.tag == "Enemy") {
-                other.GetComponent<Health>().TakeDamage(50);
+                other.GetComponent<Health>().TakeDamage(damage);
                 Destroy(gameObject);
             }
            

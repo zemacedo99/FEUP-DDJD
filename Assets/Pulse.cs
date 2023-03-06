@@ -9,6 +9,7 @@ public class Pulse : MonoBehaviour {
     private float range;
     public float rangeMax;
     public float rangeSpeed;
+    [SerializeField] private int damage = 50;
 
     private List<Collider2D> alreadyPingedColliderList;
 
@@ -52,6 +53,7 @@ public class Pulse : MonoBehaviour {
                     if (raycastHit2D.collider.CompareTag("Enemy")) 
                     {
                         Debug.Log("Hit an Enemy");
+                        raycastHit2D.collider.GetComponent<Health>().TakeDamage(damage);
                         Destroy(raycastHit2D.collider.gameObject);
                     }
 

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7957926097609457588}
   - component: {fileID: 18778350677756180}
   m_Layer: 0
-  m_Name: Robot
+  m_Name: Drone
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 2e3757158184ab849a64e606bb00dca2, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5f73c26405779a24f856330e6a4f0190, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -122,7 +122,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.02522865}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -133,7 +133,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.6359054, y: 0.58986443}
+  m_Size: {x: 0.6359054, y: 0.5394071}
   m_EdgeRadius: 0
 --- !u!114 &7957926097609457588
 MonoBehaviour:
@@ -147,8 +147,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab22940fcbbeb43a6b024238f2715810, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.5
-  damage: 50
+  speed: 0.8
+  damage: 30
   data: {fileID: 11400000, guid: bee1b090d67464431bcc0404d317138d, type: 2}
 --- !u!114 &18778350677756180
 MonoBehaviour:
@@ -162,5 +162,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 596316a2732518c40abc6bc9dd993d2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
+  health: 80
   gearPrefab: {fileID: 5370352024293293419, guid: 6f082e9e772e8ce42991329aaa8adf0c, type: 3}

@@ -120,4 +120,13 @@ public class PlayerController : MonoBehaviour
     {
         GameObject pulse = Instantiate(pulsePrefab, firePoint.position, Quaternion.identity);
     }
+
+    
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+        if (collider.CompareTag("Gear"))
+        {
+            Destroy(collider.gameObject);
+        }
+    }
 }
