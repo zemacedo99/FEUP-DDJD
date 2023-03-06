@@ -27,6 +27,11 @@ public class PlayerController : MonoBehaviour
     public TextMeshProUGUI scoreText;
     private int score;
 
+    public GameObject bulletPrefab;
+    public float firingRate = 5.0f;
+
+    [SerializeField] private float bulletForce = 20.0f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -35,6 +40,10 @@ public class PlayerController : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         score = 0;
         UpdateScoreText();
+
+        // Call the PeriodicalShooting function every firingRate seconds, starting after an initial delay of 0 seconds
+        InvokeRepeating("PeriodicalShooting", 0f, firingRate);
+        bulletForce = 20.0f;
     }
 
     private void FixedUpdate() 
@@ -111,8 +120,6 @@ public class PlayerController : MonoBehaviour
         movementInput = movementValue.Get<Vector2>();
     }
 
- 
-
     public void ApplySpeedBoost(float duration)
     {
         // Increase movement speed for the specified duration
@@ -127,17 +134,11 @@ public class PlayerController : MonoBehaviour
         boostDurationRemaining = duration;
     }
 
-    public void HealAmount(float healAmount)
-    {
-        
-    }
-
     public void addWeapon()
     {
         GameObject pulse = Instantiate(pulsePrefab, firePoint.position, Quaternion.identity);
     }
 
-    
     private void OnTriggerEnter2D(Collider2D collider)
     {
         if (collider.CompareTag("Gear"))
@@ -152,4 +153,65 @@ public class PlayerController : MonoBehaviour
     {
         scoreText.text = "Score: " + score.ToString();
     }
+
+
+
+ 
+    void PeriodicalShooting()
+    {
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+        if (enemies.Length != 0)
+        {
+            // Find the closest enemy
+            Vector2 closestEnemyPosition = GetClosestEnemyPosition(enemies);
+            // Calculate the direction of the bullet
+            Vector2 shootDirection = ((Vector2)closestEnemyPosition - (Vector2)firePoint.position).normalized;
+
+            // Fire a bullet in the direction of the closest enemy
+            Shoot(shootDirection);
+        }
+
+    }
+
+    public void Shoot(Vector2 shootDirection)
+    {
+        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
+        Physics2D.IgnoreCollision(bullet.GetComponent<Collider2D>(), GetComponent<Collider2D>());
+        Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
+        
+        Debug.Log("Shoot direction: " + bulletForce);
+        Debug.Log("velocity " + rb.velocity);
+        rb.velocity = shootDirection * bulletForce;
+        Debug.Log("velocity 2" + rb.velocity);
+    }
+    
+    Vector2 GetClosestEnemyPosition(GameObject[] enemies)
+    {        
+        GameObject closestEnemy = null;
+        float closestDistance = Mathf.Infinity;
+
+        foreach (GameObject enemy in enemies)
+        {
+            float distance = Vector2.Distance(firePoint.position, enemy.transform.position);
+            if (distance < closestDistance)
+            {
+                closestEnemy = enemy;
+                closestDistance = distance;
+            }
+        }
+
+        Vector2 closestEnemyPosition = Vector2.zero;
+        if (closestEnemy != null)
+        {
+            closestEnemyPosition = closestEnemy.transform.position;
+            // Debug.Log("Closest enemy position: " + closestEnemyPosition);
+
+        }
+
+        // Vector2 shootDirection = ( (Vector2)closestEnemyPosition- (Vector2)transform.position).normalized;
+
+        return closestEnemyPosition; 
+    }
+
 }
