@@ -21,7 +21,8 @@ public class PlayerController : MonoBehaviour
     public Transform firePoint;
 
     private float speedBoostMultiplier = 1f;
-    private float speedBoostDurationRemaining = 0f;
+    private float attackBoostMultiplier = 1f;
+    private float boostDurationRemaining = 0f;
 
     public TextMeshProUGUI scoreText;
     private int score;
@@ -38,15 +39,16 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate() 
     {
-        if (speedBoostDurationRemaining > 0f)
+        if (boostDurationRemaining > 0f)
         {
-            // Apply speed boost
-            speedBoostDurationRemaining -= Time.deltaTime;
+            // Apply boost
+            boostDurationRemaining -= Time.deltaTime;
         }
         else
         {
             // Reset speed boost
             speedBoostMultiplier = 1f;
+            attackBoostMultiplier = 1f;
         }
 
         // If movement input is not 0, try to move
@@ -115,7 +117,14 @@ public class PlayerController : MonoBehaviour
     {
         // Increase movement speed for the specified duration
         speedBoostMultiplier = 1.5f;
-        speedBoostDurationRemaining = duration;
+        boostDurationRemaining = duration;
+    }
+
+    public void ApplyAttackBoost(float duration)
+    {
+        // Increase movement speed for the specified duration
+        attackBoostMultiplier = 1.5f;
+        boostDurationRemaining = duration;
     }
 
     public void HealAmount(float healAmount)

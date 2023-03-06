@@ -34,6 +34,9 @@ public class Collectibles : MonoBehaviour
                 case "MovSpeed":
                     player.ApplySpeedBoost(5);
                     break;
+                case "AttackBoost":
+                    player.ApplyAttackBoost(5);
+                    break;
                 case "PulseWeapon":
                     player.addWeapon();
                     break;
