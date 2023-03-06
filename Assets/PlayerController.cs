@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using TMPro;
+
 
 // Takes and handles input and movement for a player character
 public class PlayerController : MonoBehaviour
@@ -21,12 +23,17 @@ public class PlayerController : MonoBehaviour
     private float speedBoostMultiplier = 1f;
     private float speedBoostDurationRemaining = 0f;
 
+    public TextMeshProUGUI scoreText;
+    private int score;
+
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        score = 0;
+        UpdateScoreText();
     }
 
     private void FixedUpdate() 
@@ -127,6 +134,13 @@ public class PlayerController : MonoBehaviour
         if (collider.CompareTag("Gear"))
         {
             Destroy(collider.gameObject);
+            score++;
+            UpdateScoreText();
         }
+    }
+
+    void UpdateScoreText()
+    {
+        scoreText.text = "Score: " + score.ToString();
     }
 }

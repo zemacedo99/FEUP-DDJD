@@ -184,6 +184,7 @@ MonoBehaviour:
     maxNormalAngle: 0
   pulsePrefab: {fileID: 832554041080370018, guid: 08c351087d9db354d866546a18e318df, type: 3}
   firePoint: {fileID: 9173691631704459941}
+  scoreText: {fileID: 0}
 --- !u!50 &4529632712605021800
 Rigidbody2D:
   serializedVersion: 4
