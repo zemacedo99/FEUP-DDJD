@@ -20,17 +20,20 @@ public class PlayerController : MonoBehaviour
     public GameObject pulsePrefab;
     public Transform firePoint;
 
-    private float speedBoostMultiplier = 1f;
-    private float attackBoostMultiplier = 1f;
-    private float boostDurationRemaining = 0f;
+    private float speedBoostMultiplier;
+    private float attackBoostMultiplier;
+    private float speedBoostDurationRemaining;
+    private float attackBoostDurationRemaining;
 
     public TextMeshProUGUI scoreText;
     private int score;
 
     public GameObject bulletPrefab;
-    public float firingRate = 5.0f;
+    public float firingRate = 1.0f;
+    private float originalFiringRate; 
+    private float modifiedFiringRate;
 
-    [SerializeField] private float bulletForce = 20.0f;
+    [SerializeField] private float bulletForce = 1.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -39,25 +42,48 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         score = 0;
+        speedBoostMultiplier = 1f;
+        attackBoostMultiplier = 2f;
+        speedBoostDurationRemaining = 0f;
+        attackBoostDurationRemaining = 0f;
+        originalFiringRate = firingRate;
         UpdateScoreText();
 
         // Call the PeriodicalShooting function every firingRate seconds, starting after an initial delay of 0 seconds
         InvokeRepeating("PeriodicalShooting", 0f, firingRate);
-        bulletForce = 20.0f;
     }
 
     private void FixedUpdate() 
     {
-        if (boostDurationRemaining > 0f)
+        if (speedBoostDurationRemaining > 0f)
         {
             // Apply boost
-            boostDurationRemaining -= Time.deltaTime;
+            Debug.Log("Speed Bost");
+            speedBoostDurationRemaining -= Time.deltaTime;
         }
         else
         {
             // Reset speed boost
+            Debug.Log("No Speed Bost");
             speedBoostMultiplier = 1f;
-            attackBoostMultiplier = 1f;
+        }
+
+        if (attackBoostDurationRemaining > 0f)
+        {
+            Debug.Log("Attack Bost");
+            Debug.Log(attackBoostDurationRemaining);
+            // Apply boost
+            attackBoostDurationRemaining -= Time.deltaTime;
+        }
+        else
+        {
+            Debug.Log("No Attack Bost");
+            // // Reset the firing rate
+            // firingRate = firingRate * attackBoostMultiplier;
+
+            // // Cancel the existing invocation and start a new invocation with the updated firing rate
+            // CancelInvoke("PeriodicalShooting");
+            // InvokeRepeating("PeriodicalShooting", 0f, originalFiringRate);
         }
 
         // If movement input is not 0, try to move
@@ -124,14 +150,22 @@ public class PlayerController : MonoBehaviour
     {
         // Increase movement speed for the specified duration
         speedBoostMultiplier = 1.5f;
-        boostDurationRemaining = duration;
+        speedBoostDurationRemaining = duration;
     }
 
     public void ApplyAttackBoost(float duration)
     {
         // Increase movement speed for the specified duration
-        attackBoostMultiplier = 1.5f;
-        boostDurationRemaining = duration;
+        // attackBoostMultiplier = 2f;
+        attackBoostDurationRemaining = duration;
+
+        // Increase the firing rate
+        firingRate /= attackBoostMultiplier;
+
+        // Cancel the existing invocation and start a new invocation with the updated firing rate
+        CancelInvoke("PeriodicalShooting");
+        InvokeRepeating("PeriodicalShooting", 0f, firingRate);
+
     }
 
     public void addWeapon()
@@ -180,10 +214,10 @@ public class PlayerController : MonoBehaviour
         Physics2D.IgnoreCollision(bullet.GetComponent<Collider2D>(), GetComponent<Collider2D>());
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
         
-        Debug.Log("Shoot direction: " + bulletForce);
-        Debug.Log("velocity " + rb.velocity);
+        // Debug.Log("Shoot direction: " + bulletForce);
+        // Debug.Log("velocity " + rb.velocity);
         rb.velocity = shootDirection * bulletForce;
-        Debug.Log("velocity 2" + rb.velocity);
+        // Debug.Log("velocity 2" + rb.velocity);
     }
     
     Vector2 GetClosestEnemyPosition(GameObject[] enemies)

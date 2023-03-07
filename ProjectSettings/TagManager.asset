@@ -10,6 +10,7 @@ TagManager:
   - PulseWeapon
   - HealthBar
   - Gear
+  - AttackBoost
   layers:
   - Default
   - TransparentFX

@@ -33,12 +33,15 @@ public class Collectibles : MonoBehaviour
                     break;
                 case "MovSpeed":
                     player.ApplySpeedBoost(5);
+                    Debug.Log("MovSpeed");
                     break;
                 case "AttackBoost":
                     player.ApplyAttackBoost(5);
+                    Debug.Log("AttackBoost");
                     break;
                 case "PulseWeapon":
                     player.addWeapon();
+                    Debug.Log("PulseWeapon");
                     break;
                 default:
                     // handle any other tag
