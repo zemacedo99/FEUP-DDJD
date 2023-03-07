@@ -20,18 +20,17 @@ public class PlayerController : MonoBehaviour
     public GameObject pulsePrefab;
     public Transform firePoint;
 
-    private float speedBoostMultiplier;
-    private float attackBoostMultiplier;
-    private float speedBoostDurationRemaining;
-    private float attackBoostDurationRemaining;
+    private float speedBoostMultiplier = 1f;
+    private float attackBoostMultiplier = 2f;
+    private float speedBoostDurationRemaining = 0f;
+    private float attackBoostDurationRemaining = 0f;
 
     public TextMeshProUGUI scoreText;
-    private int score;
+    private int score = 0;
 
     public GameObject bulletPrefab;
     public float firingRate = 1.0f;
     private float originalFiringRate; 
-    private float modifiedFiringRate;
 
     [SerializeField] private float bulletForce = 1.0f;
 
@@ -41,11 +40,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        score = 0;
-        speedBoostMultiplier = 1f;
-        attackBoostMultiplier = 2f;
-        speedBoostDurationRemaining = 0f;
-        attackBoostDurationRemaining = 0f;
+
         originalFiringRate = firingRate;
         UpdateScoreText();
 
@@ -57,33 +52,28 @@ public class PlayerController : MonoBehaviour
     {
         if (speedBoostDurationRemaining > 0f)
         {
-            // Apply boost
-            Debug.Log("Speed Bost");
             speedBoostDurationRemaining -= Time.deltaTime;
         }
         else
         {
-            // Reset speed boost
-            Debug.Log("No Speed Bost");
             speedBoostMultiplier = 1f;
         }
 
         if (attackBoostDurationRemaining > 0f)
+            {
+                attackBoostDurationRemaining -= Time.deltaTime;
+                if (firingRate != originalFiringRate / attackBoostMultiplier)
+                {
+                    firingRate = originalFiringRate / attackBoostMultiplier;
+                    CancelInvoke("PeriodicalShooting");
+                    InvokeRepeating("PeriodicalShooting", 0f, firingRate);
+                }
+            }
+        else if (firingRate != originalFiringRate)
         {
-            Debug.Log("Attack Bost");
-            Debug.Log(attackBoostDurationRemaining);
-            // Apply boost
-            attackBoostDurationRemaining -= Time.deltaTime;
-        }
-        else
-        {
-            Debug.Log("No Attack Bost");
-            // // Reset the firing rate
-            // firingRate = firingRate * attackBoostMultiplier;
-
-            // // Cancel the existing invocation and start a new invocation with the updated firing rate
-            // CancelInvoke("PeriodicalShooting");
-            // InvokeRepeating("PeriodicalShooting", 0f, originalFiringRate);
+            firingRate = originalFiringRate;
+            CancelInvoke("PeriodicalShooting");
+            InvokeRepeating("PeriodicalShooting", 0f, firingRate);
         }
 
         // If movement input is not 0, try to move
@@ -155,16 +145,11 @@ public class PlayerController : MonoBehaviour
 
     public void ApplyAttackBoost(float duration)
     {
-        // Increase movement speed for the specified duration
-        // attackBoostMultiplier = 2f;
-        attackBoostDurationRemaining = duration;
-
         // Increase the firing rate
-        firingRate /= attackBoostMultiplier;
+        firingRate = originalFiringRate / attackBoostMultiplier;
 
-        // Cancel the existing invocation and start a new invocation with the updated firing rate
-        CancelInvoke("PeriodicalShooting");
-        InvokeRepeating("PeriodicalShooting", 0f, firingRate);
+        // Set the duration of the power-up
+        attackBoostDurationRemaining = duration;
 
     }
 
