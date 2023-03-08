@@ -31,6 +31,7 @@ public class PlayerController : MonoBehaviour
     public GameObject bulletPrefab;
     public float firingRate = 1.0f;
     private float originalFiringRate; 
+    public float range = 2;
 
     [SerializeField] private float bulletForce = 1.0f;
 
@@ -184,11 +185,19 @@ public class PlayerController : MonoBehaviour
         {
             // Find the closest enemy
             Vector2 closestEnemyPosition = GetClosestEnemyPosition(enemies);
+
+            float distance = Vector2.Distance(firePoint.position, closestEnemyPosition);
+            
+            if(range >= distance)
+            {
             // Calculate the direction of the bullet
             Vector2 shootDirection = ((Vector2)closestEnemyPosition - (Vector2)firePoint.position).normalized;
 
+            // Debug.Log(distance);
             // Fire a bullet in the direction of the closest enemy
             Shoot(shootDirection);
+            }
+
         }
 
     }
