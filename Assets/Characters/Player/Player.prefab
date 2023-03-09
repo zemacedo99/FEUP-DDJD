@@ -184,8 +184,10 @@ MonoBehaviour:
   pulsePrefab: {fileID: 832554041080370018, guid: 08c351087d9db354d866546a18e318df, type: 3}
   firePoint: {fileID: 9173691631704459941}
   scoreText: {fileID: 0}
+  score: 0
   bulletPrefab: {fileID: 28594865713549678, guid: a7252885091f8cc4c8ba5f4a298889f2, type: 3}
   firingRate: 1
+  range: 2
   bulletForce: 20
 --- !u!50 &4529632712605021800
 Rigidbody2D:
@@ -221,7 +223,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.002604343, y: -0.15967162}
+  m_Offset: {x: 0.002604343, y: -0.07691608}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -232,7 +234,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.09085517, y: 0.025912374}
+  m_Size: {x: 0.09085517, y: 0.19142345}
   m_EdgeRadius: 0
 --- !u!95 &2291113726587256351
 Animator:
@@ -267,6 +269,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
+  MAX_HEALTH: 200
   gearPrefab: {fileID: 0}
 --- !u!1001 &530729857000677204
 PrefabInstance:
