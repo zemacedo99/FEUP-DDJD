@@ -11,11 +11,51 @@ public class EnemySpawner : MonoBehaviour
 [SerializeField] 
 private GameObject RobotPrefab;
 
+[SerializeField]
+private GameObject DronePrefab;
+
 [SerializeField] private float swarmerInterval = 3.5f;
+[SerializeField] private float droneInterval = 2.0f;
+
+private Coroutine swarmerCoroutine;
+private Coroutine droneCoroutine;
+
+
+private int score = 0;
+
+private GameObject player ;
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(SpawnEnemy(swarmerInterval, RobotPrefab));
+        player = GameObject.FindGameObjectWithTag("Player");
+        swarmerCoroutine =  StartCoroutine(SpawnEnemy(swarmerInterval, RobotPrefab));
+        droneCoroutine =  StartCoroutine(SpawnEnemy(droneInterval, DronePrefab));
+
+    }
+
+    void Update()
+    {
+        score = player.GetComponent<PlayerController>().GetScore();
+
+        if(score > 10){
+            swarmerInterval = 2.5f;
+            droneInterval = 1.0f;
+            
+        }
+
+        if(score > 20){
+            swarmerInterval = 1.5f;
+            droneInterval = 0.5f;
+            
+        }
+
+        if(score > 30){
+            swarmerInterval = 0.5f;
+            droneInterval = 0.1f;
+            
+        }
+
+
     }
 
     

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
@@ -10,17 +11,23 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] private EnemyData data;
 
+    [SerializeField] private NavMeshAgent agent;
+
     private GameObject player;
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        agent.updateRotation = false;
+        agent.updateUpAxis = false;
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        Swarm();
+        //Swarm();
+        agent.SetDestination(player.transform.position);
     }
 
     private void setEnemyValues() {
@@ -35,12 +42,12 @@ public class Enemy : MonoBehaviour
     }
 
 
-    private void OnTriggerEnter2D(Collider2D collider)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collider.gameObject.tag == "Player")
+        if (collision.gameObject.tag == "Player")
         {
-           if(collider.GetComponent<Health>() != null) {
-               collider.GetComponent<Health>().TakeDamage(damage);
+           if(collision.gameObject.GetComponent<Health>() != null) {
+               collision.gameObject.GetComponent<Health>().TakeDamage(damage);
        
            }
         }

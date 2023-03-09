@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 377831883746958162}
   - component: {fileID: 7957926097609457588}
   - component: {fileID: 18778350677756180}
+  - component: {fileID: 2836853026531397261}
   m_Layer: 0
   m_Name: Robot
   m_TagString: Enemy
@@ -119,7 +120,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -150,6 +151,7 @@ MonoBehaviour:
   speed: 0.5
   damage: 50
   data: {fileID: 11400000, guid: bee1b090d67464431bcc0404d317138d, type: 2}
+  agent: {fileID: 2836853026531397261}
 --- !u!114 &18778350677756180
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -164,3 +166,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   gearPrefab: {fileID: 5370352024293293419, guid: 6f082e9e772e8ce42991329aaa8adf0c, type: 3}
+--- !u!195 &2836853026531397261
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 377831883746958166}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.31999996
+  m_Speed: 1
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 0.64
+  m_BaseOffset: 0.32
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4

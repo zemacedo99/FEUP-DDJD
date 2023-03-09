@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
     private float attackBoostDurationRemaining = 0f;
 
     public TextMeshProUGUI scoreText;
-    private int score = 0;
+    public int score = 0;
 
     public GameObject bulletPrefab;
     public float firingRate = 1.0f;
@@ -47,6 +47,13 @@ public class PlayerController : MonoBehaviour
 
         // Call the PeriodicalShooting function every firingRate seconds, starting after an initial delay of 0 seconds
         InvokeRepeating("PeriodicalShooting", 0f, firingRate);
+    }
+
+
+
+
+    public int GetScore() {
+        return this.score;
     }
 
     private void FixedUpdate() 
@@ -218,6 +225,7 @@ public class PlayerController : MonoBehaviour
     {        
         GameObject closestEnemy = null;
         float closestDistance = Mathf.Infinity;
+  
 
         foreach (GameObject enemy in enemies)
         {

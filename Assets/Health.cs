@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Health : MonoBehaviour
 {
@@ -72,12 +73,19 @@ public class Health : MonoBehaviour
 
 
 	private void Die() {
-		Debug.Log("I died");
+		
+		if(gameObject.CompareTag("Player"))
+		{
+         
+		 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1 );
+
+		}
 		if(gameObject.CompareTag("Enemy"))
 		{
 			DropGear();
+			Destroy(gameObject);
 		}
-		Destroy(gameObject);
+		
 	}
 
 	private void DropGear(){
