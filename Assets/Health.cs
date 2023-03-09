@@ -8,7 +8,7 @@ public class Health : MonoBehaviour
 
 	[SerializeField] private int health = 100;
 
-	private int MAX_HEALTH = 200;
+	public int MAX_HEALTH = 200;
 
 	private GameObject healthBar;
 	public GameObject gearPrefab;

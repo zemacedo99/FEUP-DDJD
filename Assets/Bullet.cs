@@ -21,6 +21,18 @@ public class Bullet : MonoBehaviour
             }
            
         }
+
+        if(other.CompareTag("Player")) {
+            Debug.Log("Player hit!");
+            if(other.gameObject.tag == "Player") {
+                other.GetComponent<Health>().TakeDamage(damage);
+                Destroy(gameObject);
+            }
+        }
+
+        if(other.CompareTag("Wall")) {
+            Destroy(gameObject);
+        }
     }
 
 }

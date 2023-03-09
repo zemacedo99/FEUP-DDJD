@@ -37,6 +37,11 @@ private GameObject player ;
     {
         score = player.GetComponent<PlayerController>().GetScore();
 
+        if(score > 5){
+            DronePrefab.GetComponent<Health>().MAX_HEALTH = 400;
+            RobotPrefab.GetComponent<Health>().MAX_HEALTH = 600;
+        }
+
         if(score > 10){
             swarmerInterval = 2.5f;
             droneInterval = 1.0f;
@@ -54,6 +59,8 @@ private GameObject player ;
             droneInterval = 0.1f;
             
         }
+
+        
 
 
     }

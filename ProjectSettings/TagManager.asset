@@ -11,6 +11,7 @@ TagManager:
   - HealthBar
   - Gear
   - AttackBoost
+  - Wall
   layers:
   - Default
   - TransparentFX
