@@ -188,7 +188,8 @@ MonoBehaviour:
   bulletPrefab: {fileID: 28594865713549678, guid: a7252885091f8cc4c8ba5f4a298889f2, type: 3}
   firingRate: 1
   range: 2
-  bulletForce: 20
+  bulletForce: 1
+  joystick: {fileID: 0}
 --- !u!50 &4529632712605021800
 Rigidbody2D:
   serializedVersion: 4

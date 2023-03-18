@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour
     public float range = 2;
 
     [SerializeField] private float bulletForce = 1.0f;
+    public Joystick joystick;
 
     // Start is called before the first frame update
     void Start()
@@ -107,6 +108,40 @@ public class PlayerController : MonoBehaviour
             if(movementInput.x < 0) {
                 spriteRenderer.flipX = true;
             } else if (movementInput.x > 0) {
+                spriteRenderer.flipX = false;
+            }
+
+        }
+        else {
+            animator.SetBool("isMoving", false);
+        }
+
+
+        Vector2 inputDirection = new Vector2(joystick.Horizontal, joystick.Vertical);
+
+        // If movement input is not 0, try to move
+        if(inputDirection != Vector2.zero){
+
+            if(inputDirection != Vector2.zero){
+                
+                bool success = TryMove(inputDirection);
+
+                if(!success) {
+                    success = TryMove(new Vector2(inputDirection.x, 0));
+                }
+
+                if(!success) {
+                    success = TryMove(new Vector2(0, inputDirection.y));
+                }
+                
+                animator.SetBool("isMoving", success);
+            } 
+         
+
+            // Set direction of sprite to movement direction
+            if(inputDirection.x < 0) {
+                spriteRenderer.flipX = true;
+            } else if (inputDirection.x > 0) {
                 spriteRenderer.flipX = false;
             }
 
